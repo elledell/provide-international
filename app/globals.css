@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@theme {
+  --color-brandBlue-50: #F0F3FA;
+  --color-brandBlue-100: #D5DEEF;
+  --color-brandBlue-300: #8AAEE0;
+  --color-brandBlue-500: #628ECB;
+  --color-brandBlue-700: #395886;
+  --color-brandGold-500: #FFA000;
+}
