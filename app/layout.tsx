@@ -13,12 +13,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Applied strict overflow and max-width to the HTML and Body tags
   return (
-    <html lang="en" className="overflow-x-hidden max-w-[100vw]">
-      <body className="overflow-x-hidden max-w-[100vw] w-full relative m-0 p-0">
-        <AccessibilityWidget />
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+    <html lang="en">
+      <body className="m-0 p-0 antialiased bg-white">
+        {/* 
+          The Bulletproof Mobile Wrapper: 
+          This div acts as the true boundary of your app, completely blocking 
+          horizontal scrolling caused by off-screen animations and widgets. 
+        */}
+        <div className="relative w-full max-w-[100vw] overflow-x-hidden min-h-screen flex flex-col">
+          <AccessibilityWidget />
+          <ConvexClientProvider>{children}</ConvexClientProvider>
+        </div>
       </body>
     </html>
   );
