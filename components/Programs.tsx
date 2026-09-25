@@ -1,6 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
 export default function Programs() {
+  // Track which card is currently flipped
+  const [activeCard, setActiveCard] = useState<number | null>(null);
+
   const cards = [
     {
       title: "Maternal Health",
@@ -45,14 +51,19 @@ export default function Programs() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
         {cards.map((card, idx) => (
           /* Perspective container for the 3D effect */
-          <div key={idx} className="group relative w-full h-[280px] [perspective:1000px] cursor-pointer">
+          <div 
+            key={idx} 
+            className="relative w-full h-[280px] [perspective:1000px] cursor-pointer"
+            onClick={() => setActiveCard(activeCard === idx ? null : idx)}
+            onMouseEnter={() => setActiveCard(idx)}
+            onMouseLeave={() => setActiveCard(null)}
+          >
             
-            
-            <div className="w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-xl rounded-xl">
+            {/* The flip is now controlled by the activeCard state instead of purely group-hover */}
+            <div className={`w-full h-full transition-transform duration-700 [transform-style:preserve-3d] shadow-xl rounded-xl ${activeCard === idx ? '[transform:rotateY(180deg)]' : ''}`}>
               
               {/* --- FRONT FACE --- */}
               <div className="absolute inset-0 bg-white rounded-xl [backface-visibility:hidden] flex flex-col items-center justify-center p-6 border-b-[6px] border-brandGold-500">
-                {/* Light yellow icon circle matching the reference */}
                 <div className="w-20 h-20 bg-yellow-50 rounded-full flex items-center justify-center text-brandGold-500 mb-6 shadow-sm">
                   {card.icon}
                 </div>
@@ -62,7 +73,6 @@ export default function Programs() {
               </div>
 
               {/* --- BACK FACE --- */}
-              {/* Reveals on hover matching the orange/gold gradient from the reference */}
               <div className="absolute inset-0 bg-gradient-to-br from-brandGold-500 to-orange-500 rounded-xl [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col items-center justify-center p-8 text-white text-center shadow-inner">
                 <h3 className="text-[22px] font-black mb-3 leading-tight drop-shadow-sm">
                   {card.title}
@@ -72,6 +82,8 @@ export default function Programs() {
                 </p>
                 <Link
                   href={idx === 3 ? "#donate" : "#"}
+                  // Added e.stopPropagation() so clicking the link doesn't instantly flip the card back before navigating
+                  onClick={(e) => e.stopPropagation()}
                   className="bg-white text-brandGold-500 font-extrabold py-2.5 px-8 rounded-full text-sm hover:scale-105 shadow-md transition-transform duration-300"
                 >
                   Click Here

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
-import AccessibilityWidget from "@/components/AccessibilityWidget"; // Adjust the import path if your components folder is located elsewhere
+import AccessibilityWidget from "@/components/AccessibilityWidget";
 
 export const metadata: Metadata = {
   title: "Provide International - Demo",
@@ -13,9 +13,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Applied strict overflow and max-width to the HTML and Body tags
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="overflow-x-hidden max-w-[100vw]">
+      <body className="overflow-x-hidden max-w-[100vw] w-full relative m-0 p-0">
         <AccessibilityWidget />
         <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
